@@ -14,7 +14,6 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800&display=swap');
-        /*  */
 
         * {
             font-family: 'Montserrat';
@@ -94,9 +93,6 @@
             margin-bottom: 4px;
         }
 
-        .guestbook-main {
-            padding: 20px;
-        }
 
         .guestbook-posting {
             display: flex;
@@ -110,9 +106,7 @@
 
         .guestbook-postingbtn {
             justify-content: center;
-            /* 수평 가운데 정렬 */
             margin: auto;
-            /* 왼쪽과 오른쪽에 자동 여백 */
             padding: auto;
 
         }
@@ -120,11 +114,13 @@
         .guestbook-postingbutton {
             margin: auto;
             padding: 40px;
+            background-color: #4CAF50;
+            color: white;
         }
 
         .guestbook-repleimage {
-            height: 80px;
-            width: 80px;
+            height: 60px;
+            width: 60px;
             border-radius: 50%;
         }
 
@@ -135,10 +131,10 @@
         .guestbook-listrow {
             display: flex;
             flex-direction: row;
-            background-color: lightgray;
+            background-color: #eeeeee;
             padding: 20px 20px 0px 20px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .guestbook-listcolumn {
@@ -151,8 +147,8 @@
         }
 
         .guestbook-listcontent {
-            padding-top: 20px;
-            padding-left: 10px;
+            padding-top: 10px;
+            padding-left: 5px;
             flex-grow: 1;
             border-top: 2px solid white;
 
@@ -161,13 +157,35 @@
         .guestbook-listcolumn>div {
             display: flex;
             flex-direction: row;
-            gap: 30px;
-            margin-left: 10px;
+            gap: 10px;
+            margin-left: 5px;
         }
 
         .guestbook-listdatetime {
             font-size: 12px;
             color: #777777;
+        }
+
+        .guestbook-deleteBtn {
+            margin-left: auto;
+            font-size: 14px;
+            color: gray;
+            /* 텍스트 색상 */
+        }
+
+        .guestbook-deleteBtn:hover {
+            color: darkred;
+            /* hover 시 색상 변화 */
+            text-decoration: underline;
+            /* 밑줄 추가 */
+            outline: none;
+        }
+
+        .guestbook-deleteBtn:focus {
+            outline: none;
+            /* 포커스 시에도 파란색 라인 제거 */
+            box-shadow: none;
+            /* 포커스 시 그림자도 제거 */
         }
     </style>
     <script type="module">
@@ -191,9 +209,7 @@
             measurementId: "G-1SCXC4PL64"
         };
 
-        let user = "이지은";
-
-
+        let user = $('#name').text();
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -213,14 +229,14 @@
                     'content': content,
                     'datetime': localDateTime
                 };
-                await addDoc(collection(db, 'guestBook', user, 'entries'), doc);
+                await addDoc(collection(db, `guestBook/${user}/entries`), doc);
                 alert('방명록이 작성되었습니다!');
                 window.location.reload();
             }
         });
 
 
-        let docs = await getDocs(collection(db, 'guestBook', user, 'entries'));
+        let docs = await getDocs(collection(db, `guestBook/${user}/entries`));
         docs.forEach((doc) => {
             let row = doc.data();
             console.log(row);
@@ -228,13 +244,15 @@
             let nickname = row['nickname'];
             let content = row['content'];
             let datetime = row['datetime'];
+            let id = doc.id;
 
-            let temp_guestbook = `<div class="guestbook-listrow">
+            let temp_guestbook = `<div class="guestbook-listrow" id="comment-${id}">
                 <img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTY0/MDAxNjA0MjI4ODc1MDgx.20zY0e0fjnqLYvyFxN2FuZl75yr0p-lejDrTdLzRargg.aDqPo9fsnwOujN45rK3vW-dUi2usn0wBwQE8xmstEBUg.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%EA%B0%88%EC%83%89.jpg?type=w400"
                     class="img-thumbnail guestbook-repleimage" alt="...">
                 <div class="guestbook-listcolumn">
                     <div>
-                        <h5 class="mt-0">${nickname}</h5>
+                        <h6 class="mt-0">${nickname}</h6>
+                        <button class="btn guestbook-deleteBtn" id="deleteButton">삭제</button>
                     </div>
                     <p class="guestbook-listcontent">${content}</p>
                     <p class="guestbook-listdatetime">${datetime}</p>
@@ -246,6 +264,14 @@
 
         });
 
+
+        //삭제 코드
+        $("#deleteButton").click(async function () {
+            
+        }
+
+
+
     </script>
 
 
@@ -255,7 +281,7 @@
     <div class="mainbox">
         <div>
             <img class="profile" src="face.jpg">
-            <h1>최다원</h1>
+            <h1 id="name">최다원</h1>
             <p class="title">백엔드 개발 지망생</p>
             <br><br><br><br>
         </div>
@@ -323,6 +349,7 @@
 
         <section>
             <div>
+                <h2>방명록</h2>
                 <div class="guestbook-main">
                     <div class="guestbook-posting">
                         <div class="guestbook-postingbox" id="postingbox">
