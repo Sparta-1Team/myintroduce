@@ -1,0 +1,103 @@
+/* style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f9;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left {
+    width: 30%;
+    background-color: #78b1f9;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.profile-img img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.left h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.left h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.left hr {
+    border: 1px solid white;
+    margin: 20px 0;
+}
+
+.contact-info {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.right {
+    width: 70%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.right h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+.sub-title {
+    font-size: 16px;
+    color: gray;
+    margin-bottom: 20px;
+}
+
+nav {
+    margin: 20px 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #78b1f9;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.profile {
+    margin-bottom: 30px;
+}
+
+.profile h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.education h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.education ul {
+    list-style: none;
+    padding: 0;
+}
+
+.education li {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+}
