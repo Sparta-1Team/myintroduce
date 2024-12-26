@@ -193,7 +193,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { doc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
@@ -214,41 +214,39 @@
         const db = getFirestore(app);
 
 
-        const docRef = doc(db, 'modifyintro');<-여기서 송윤정 문서 내용을 불러오고 싶어요.ㅠㅠ
-		
-        let update=docRef;
-        update.forEach((doc) => {
-            let row = doc.data();
+        const docRead = doc(db, 'modifyintro', '송윤정');
+        const docSnap = await getDoc(docRead);
 
+        let row = docSnap.data();
+
+        console.log(row);
+
+        let MPic = row['MPic'];
+        let MName = row['MName'];
+        let MMbti = row['MMbti'];
+        let Mhobby = row['Mhobby'];
+        let MIntro = row['MIntro'];
+        let MInsta = row['MInsta'];
+
+
+        let modify = `<img class="profile" src="${MPic}">
+            <div id="mname">
+                <h1 id="mname2">${MName}</h1>
+            </div>
+            <p class="title">백엔드 개발 지망생</p>
+            <br><br><br><br>
+        </div>`
+
+        let mlink=`<a href="${MInsta}"><img class="sns-img"
+                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/github.png?raw=true"></a>`
+
+        $('#total').empty();
+        $('#total').append(modify);
+        $('#selfintro2').empty();
+        $('#selfintro2').append(MIntro);
+        $('#link').empty();
+        $('#link').append(mlink);
             
-
-            let MPic = row['MPic'];
-            let MName = row['MName'];
-            let MMbti = row['MMbti'];
-            let Mhobby = row['Mhobby'];
-            let MIntro = row['MIntro'];
-            let MInsta = row['MInsta'];
-
-
-            let modify = `<img class="profile" src="${MPic}">
-                <div id="mname">
-                    <h1 id="mname2">${MName}</h1>
-                </div>
-                <p class="title">백엔드 개발 지망생</p>
-                <br><br><br><br>
-            </div>`
-
-            let mlink=`<a href="${MInsta}"><img class="sns-img"
-                        src="https://github.com/Sparta-1Team/myintroduce/blob/main/github.png?raw=true"></a>`
-
-            $('#total').empty();
-            $('#total').append(modify);
-            $('#selfintro2').empty();
-            $('#selfintro2').append(MIntro);
-            $('#link').empty();
-            $('#link').append(mlink);}
-            
-        );
         $("#guestbook-postingbutton").click(async function () {
 
             let nickname = $('#nickname').val();
