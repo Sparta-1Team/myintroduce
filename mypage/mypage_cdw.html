@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>개인 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800&display=swap');
+
+        * {
+            font-family: 'Montserrat';
+        }
+
+        body {
+            margin: 0px;
+            padding: 0px;
+            min-width: fit-content;
+        }
+
+
+        .mainbox {
+            width: 700px;
+            padding: 10px;
+            margin: 10px;
+            margin-right: auto;
+            margin-left: auto;
+            border: 1px soild black;
+            box-shadow: 0 1px 20px 0 reba(0, 0, 0, 0.2);
+        }
+
+
+        section {
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0px;
+            padding: 0px;
+            font-size: 36px;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 8px;
+            text-align: right;
+        }
+
+        h2 {
+            margin: 0px;
+            padding: 0px;
+            font-size: 20px;
+            color: #2aad3c;
+            font-weight: 400;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #3d3c3c;
+            padding-bottom: 5px;
+        }
+
+
+
+        .profile {
+            width: 100px;
+            height: 100px;
+            border-radius: 20%;
+            float: left;
+        }
+
+        .title {
+            font-size: 16px;
+            color: #7c7c7c;
+            font-weight: bold;
+            float: right;
+            line-height: 16px;
+        }
+
+        .sns {
+            text-align: left;
+        }
+
+        .sns-img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .float-wrap {
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+
+        .guestbook-posting {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .guestbook-postingbox {
+            width:100%;
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 14px;
+        }
+
+        .guestbook-passbtnbox{
+            margin-left: auto;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .guestbook-postingbtn {
+            justify-content: center;
+            margin-left: auto;
+
+        }
+
+        .guestbook-postingbutton {
+            margin: auto;
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .guestbook-repleimage {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+        }
+
+        .guestbook-list {
+            gap: 20px;
+        }
+
+        .guestbook-listrow {
+            display: flex;
+            flex-direction: row;
+            background-color: #eeeeee;
+            padding: 20px 20px 0px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .guestbook-listcolumn {
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+            flex-grow: 1;
+
+        }
+
+        .guestbook-listcontent {
+            padding-top: 10px;
+            padding-left: 5px;
+            flex-grow: 1;
+            border-top: 2px solid white;
+
+        }
+
+        .guestbook-listcolumn>div {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            margin-left: 5px;
+        }
+
+        .guestbook-listdatetime {
+            font-size: 12px;
+            color: #777777;
+        }
+
+        .guestbook-deleteBtn {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .guestbook-deleteBtn:hover {
+            color: darkred;
+            text-decoration: underline;
+            outline: none;
+        }
+
+        .guestbook-deleteBtn:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .guestbook-correctionBtn {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .guestbook-correctionBtn:hover {
+            color: darkred;
+            text-decoration: underline;
+            outline: none;
+        }
+
+        .guestbook-correctionBtn:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { doc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // Firebase 구성 정보 설정
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDrR7VoWYioSlzxW3S5qZAAsQbxrbBhlg",
+            authDomain: "project-introduce.firebaseapp.com",
+            projectId: "project-introduce",
+            storageBucket: "project-introduce.firebasestorage.app",
+            messagingSenderId: "830703425483",
+            appId: "1:830703425483:web:c05b7c3072112a857e084e",
+            measurementId: "G-1SCXC4PL64"
+        };
+
+        let user = $('#name').text();
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let user = $('#name').text();
+        // Firebase 인스턴스 초기화
+        const docRead = doc(db, 'modifyintro', '최다원');
+        const docSnap = await getDoc(docRead);
+
+        let row = docSnap.data();
+
+        console.log(row);
+
+        let MPic = row['MPic'];
+        let MName = row['MName'];
+        let MMbti = row['MMbti'];
+        let Mhobby = row['Mhobby'];
+        let MIntro = row['MIntro'];
+        let MInsta = row['MInsta'];
+
+
+        let modify = `<img class="profile" src="${MPic}">
+            <div id="mname">
+                <h1 id="mname2">${MName}</h1>
+            </div>
+            <p class="title">백엔드 개발 지망생</p>
+            <br><br><br><br>
+        </div>`
+
+        let mlink=`<a href="${MInsta}"><img class="sns-img"
+                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/github.png?raw=true"></a>`
+
+        $('#total').empty();
+        $('#total').append(modify);
+        $('#selfintro2').empty();
+        $('#selfintro2').append(MIntro);
+        $('#link').empty();
+        $('#link').append(mlink);
+
+        $("#guestbook-postingbutton").click(async function () {
+
+            let nickname = $('#nickname').val();
+            let content = $('#content').val();
+            let password = $('#password').val();
+            let now = new Date();
+            let localDateTime = now.toLocaleString();
+
+            if (nickname === '' || content === '') {
+                alert('닉네임과 방명록 내용을 써주세요.');
+            } else {
+                let doc = {
+                    'nickname': nickname,
+                    'content': content,
+                    'datetime': localDateTime,
+                    'password': password
+                };
+                await addDoc(collection(db, `guestBook/${user}/entries`), doc);
+                alert('방명록이 작성되었습니다!');
+                window.location.reload();
+            }
+        });
+
+
+        let docs = await getDocs(collection(db, `guestBook/${user}/entries`));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            console.log(row);
+
+            let nickname = row['nickname'];
+            let content = row['content'];
+            let datetime = row['datetime'];
+            let id = doc.id;
+
+            let temp_guestbook = `<div class="guestbook-listrow" id="comment-${id}">
+                <img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTY0/MDAxNjA0MjI4ODc1MDgx.20zY0e0fjnqLYvyFxN2FuZl75yr0p-lejDrTdLzRargg.aDqPo9fsnwOujN45rK3vW-dUi2usn0wBwQE8xmstEBUg.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%EA%B0%88%EC%83%89.jpg?type=w400"
+                    class="img-thumbnail guestbook-repleimage" alt="...">
+                <div class="guestbook-listcolumn">
+                    <div style="display: flex; align-items: center;">
+                        <h6>${nickname}</h6>
+                        <div style="display: flex; margin-left: auto; align-items: center; gap:5px;">
+                            <div class="form-floating mb-3 style="margin-left: auto;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <input type="password" id="userPassword" class="form-control" aria-describedby="passwordHelpInline">
+                                    </div>
+                                </div>                            
+                            </div>
+                            <button class="btn guestbook-correctionBtn" id="correctionButton" data-id="${id}">수정</button>
+                            <button class="btn guestbook-deleteBtn" id="deleteButton" data-id="${id}">삭제</button>
+                        </div>
+                    </div>
+                    <p class="guestbook-listcontent">${content}</p>
+                    <p class="guestbook-listdatetime">${datetime}</p>
+                </div>
+
+            </div>`
+
+            $('#guestbook-list').append(temp_guestbook);
+
+        });
+
+
+        //삭제 코드
+        $(document).on('click', '.guestbook-deleteBtn', async function () {
+            const commentId = $(this).data("id");
+            const passwordUser = $('#userPassword').val();
+
+            // 삭제 확인
+            const userConfirmed = confirm("정말로 이 댓글을 삭제하시겠습니까?");
+            if (!userConfirmed) {
+                return;
+            }
+
+            const docRef = doc(db, `guestBook/${user}/entries`, commentId);
+
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                let row = docSnap.data();
+                let password = row['password'];
+
+                if (password !== passwordUser) {
+                    alert('비밀번호가 올바르지 않습니다.');
+                    return;
+                }
+
+                await deleteDoc(docRef);
+                $(`#comment-${commentId}`).remove();
+                alert('댓글이 삭제되었습니다!');
+            } else {
+                alert("댓글을 찾을 수 없습니다.");
+            }
+        });
+
+        $(document).on('click', '.guestbook-correctionBtn', async function () {
+            const commentId = $(this).data("id");
+            const passwordUser = $('#userPassword').val();
+
+            const docRef = doc(db, `guestBook/${user}/entries`, commentId);
+            const docSnap = await getDoc(docRef);
+
+            let row = docSnap.data();
+            let password = row['password'];
+
+            if (password !== passwordUser) {
+                alert('비밀번호가 올바르지 않습니다.');
+                return;
+            }
+
+            let nickname = row['nickname'];
+            let content = row['content'];
+            let datetime = row['datetime'];
+
+            $('#nickname').val(nickname);
+            $('#content').val(content);
+            $('#password').val(password); 
+
+
+            //수정시 작성버튼(업로드 내용과 비슷하나 updateDoc을 사용)
+            $('#guestbook-postingbutton').off('click').on('click', async function () {
+                let newNickname = $('#nickname').val();
+                let newContent = $('#content').val();
+                let newPassword = $('#password').val();
+                let now = new Date();
+                let localDateTime = now.toLocaleString();
+
+                if (newNickname === '' || newContent === '') {
+                    alert('닉네임과 방명록 내용을 써주세요.');
+                } else {
+                    let updatedDoc = {
+                        'nickname': newNickname,
+                        'content': newContent,
+                        'datetime': localDateTime,
+                        'password': newPassword
+                    };
+
+                    await updateDoc(docRef, updatedDoc);
+                    alert('방명록이 수정되었습니다!');
+                    window.location.reload();
+                }
+            });
+        });
+
+
+
+    </script>
+
+
+</head>
+
+<body>
+    <div class="mainbox">
+        <div>
+            <img class="profile" src="face.jpg">
+            <h1 id="name">최다원</h1>
+            <p class="title">백엔드 개발 지망생</p>
+            <br><br><br><br>
+        </div>
+
+        <section>
+            <h2>자기소개</h2>
+            <div>
+                <p class="subtext">저는 훌륭한 백엔드 개발자가 되기 위해서 열심히 노력할려고 합니다.<br>
+                    팀원들에게 폐를 끼치지않도록 남들보다 2배, 3배 더 열심히 하겠습니다!.</p>
+            </div>
+        </section>
+        <br>
+        <h2>나의 개발 실력 / 내 프로젝트</h2>
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0" style="display: flex; justify-content: center;">
+                <div class="col-md-4">
+                    <img src="https://cdn.iconscout.com/icon/free/png-256/free-java-60-1174953.png?f=webp"
+                        class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">JAVA</h5>
+                        <p class="card-text">나의 개발 실력: ⭐⭐⭐</p>
+                        <p class="card-text">프로젝트 경험: ⭐⭐</p>
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/919/919827.png" class="img-fluid rounded-start"
+                        alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">HTML</h5>
+                        <p class="card-text">나의 개발 실력: ⭐</p>
+                        <p class="card-text">프로젝트 경험: ⭐⭐⭐</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="https://cdn.class101.net/images/a137cebb-7145-4792-9ae0-ee1e1a3981f5"
+                        class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Python</h5>
+                        <p class="card-text">나의 개발 실력: ⭐⭐⭐</p>
+                        <p class="card-text">프로젝트 경험: ⭐⭐⭐</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <section>
+            <h2>내 연락처</h2>
+            <div class="sns">
+                <p class="text">you can meet me !</p>
+                <a href="https://github.com/G-LePiz"><img class="sns-img" src="github.png"></a>
+                <a href="https://blog.naver.com/aodlstory321"><img class="sns-img" src="blog.png"></a>
+                <a href="https://www.instagram.com/dawon_choi.0912/"><img class="sns-img" src="instagram.png"></a>
+                <a href="https://lepiz.tistory.com/"><img class="sns-img" src="tistory.png"></a>
+            </div>
+        </section>
+        <br>
+
+        <section>
+            <div>
+                <h2>방명록</h2>
+                <div class="guestbook-main">
+                    <div class="guestbook-posting">
+                        <div class="guestbook-postingbox" id="postingbox">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nickname" placeholder="닉네임">
+                                <label for="nickname">닉네임</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="content" placeholder="방명록">
+                                <label for="content">방명록</label>
+                            </div>
+                            <div class="guestbook-passbtnbox">
+                                <div class="col-auto">
+                                    <span id="passwordHelpInline" class="form-text">(선택)비밀번호(최대8자)
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="password" id="password" class="form-control" maxlength="8" aria-describedby="passwordHelpInline">
+                                </div>
+        
+                                <div class="guestbook-postingbtn">
+                                    <button type="button" class="btn btn-outline-primary guestbook-postingbutton"
+                                        id="guestbook-postingbutton">작성</button>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="guestbook-list" id="guestbook-list">
+                        <!-- 추가되는 곳 -->
+                    </div>
+        
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
