@@ -250,7 +250,7 @@
             $('#link').append(mlink);
         } catch (error) {
             console.error("데이터 불러오기 실패!", error);
-        }try{
+        }finally{
             console.log("수정 데이터가 없습니다.");
         }
 
@@ -331,7 +331,7 @@
 <body>
     <div class="mainbox">
         <div id="total">
-            <img class="profile" src="../myintroduce/yjface.png">
+            <img class="profile" src="../yjface.png">
         </div>
         <h1 id="name">송윤정</h1>
         <p class="title">백엔드 개발 지망생</p>
