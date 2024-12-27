@@ -241,7 +241,7 @@
         const db = getFirestore(app);
 
 
-        const docRead = doc(db, 'modifyintro', '이지은');
+        const docRead = doc(db, 'modifyintro', user);
         const docSnap = await getDoc(docRead);
 
         let mlow = docSnap.data();
@@ -517,7 +517,7 @@
     <br>
 
 
-    <div align="right" class="modify">
+    <div tyle="align: right;" class="modify">
         <button type="button" id="postingbtn" onclick="window.location.href='MemberIntro_ijieun.html'"
             class="btn btn-outline-info"> 수정 </button>
     </div>
