@@ -99,7 +99,6 @@
             margin-bottom: 4px;
         }
 
-
         .guestbook-posting {
             display: flex;
             flex-direction: row;
@@ -215,14 +214,13 @@
     </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { doc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        // Firebase 구성 정보 설정
+
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
             apiKey: "AIzaSyCDrR7VoWYioSlzxW3S5qZAAsQbxrbBhlg",
@@ -234,12 +232,10 @@
             measurementId: "G-1SCXC4PL64"
         };
 
-
         let user = $('#name').text();
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
 
         try {
             const docRead = doc(db, 'modifyintro', '이지은');
@@ -273,7 +269,7 @@
             $('#link').append(mlink);
         } catch (error) {
             console.error("데이터 불러오기 실패!", error);
-        }finally{
+        } finally {
             console.log("수정 데이터가 없습니다.");
         }
 
@@ -441,7 +437,7 @@
                 <p class="subtext">데이터분석과 인공지능 위주로 공부하다가 백엔드로 트랙을 바꾼지 얼마 되진 않았습니다.<br>
                     하지만 끈기있게 백엔드와 마주하겠습니다. 감사합니다!</p>
                 <p class="subtext">좋아하는 것: 고양이 </p>
-                <p class="subtext">취미: 야구보기(롯데자이언츠), 유튜브감상, 가끔 애니도 봅니다.</p>
+                <p class="subtext">취미: 야구관람(롯데자이언츠), 유튜브감상, 가끔 애니도 봅니다.</p>
             </div>
         </section>
         <br>
@@ -512,59 +508,60 @@
             <div class="sns">
                 <p class="text">you can meet me !</p>
                 <div id="snscontainer">
-                <a href="https://github.com/queenriwon"><img class="sns-img" src="../github.png"></a>
-                <div id="link"><a href="https://queenriwon3.tistory.com/"><img class="sns-img" src="../tistory.png"></a>
+                    <a href="https://github.com/queenriwon"><img class="sns-img" src="../github.png"></a>
+                    <div id="link"><a href="https://queenriwon3.tistory.com/"><img class="sns-img"
+                                src="../tistory.png"></a>
+                    </div>
                 </div>
             </div>
-    </div>
-    </section>
-    <br>
+        </section>
+        <br>
 
 
-    <div align="right" class="modify">
-        <button type="button" id="postingbtn" onclick="window.location.href='../modifypage/MemberIntro_ijieun.html'"
-            class="btn btn-outline-info"> 수정 </button>
-    </div>
+        <div align="right" class="modify">
+            <button type="button" id="postingbtn" onclick="window.location.href='../modifypage/MemberIntro_ijieun.html'"
+                class="btn btn-outline-info"> 수정 </button>
+        </div>
 
-    <section>
-        <div>
-            <h2>방명록</h2>
-            <div class="guestbook-main">
-                <div class="guestbook-posting">
-                    <div class="guestbook-postingbox" id="postingbox">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nickname" placeholder="닉네임">
-                            <label for="nickname">닉네임</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="content" placeholder="방명록">
-                            <label for="content">방명록</label>
-                        </div>
-                        <div class="guestbook-passbtnbox">
-                            <div class="col-auto">
-                                <span id="passwordHelpInline" class="form-text">(선택)비밀번호(최대8자)
-                                </span>
+        <section>
+            <div>
+                <h2>방명록</h2>
+                <div class="guestbook-main">
+                    <div class="guestbook-posting">
+                        <div class="guestbook-postingbox" id="postingbox">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nickname" placeholder="닉네임">
+                                <label for="nickname">닉네임</label>
                             </div>
-                            <div class="col-auto">
-                                <input type="password" id="password" class="form-control" maxlength="8"
-                                    aria-describedby="passwordHelpInline">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="content" placeholder="방명록">
+                                <label for="content">방명록</label>
                             </div>
+                            <div class="guestbook-passbtnbox">
+                                <div class="col-auto">
+                                    <span id="passwordHelpInline" class="form-text">(선택)비밀번호(최대8자)
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="password" id="password" class="form-control" maxlength="8"
+                                        aria-describedby="passwordHelpInline">
+                                </div>
 
-                            <div class="guestbook-postingbtn">
-                                <button type="button" class="btn btn-outline-primary guestbook-postingbutton"
-                                    id="guestbook-postingbutton">작성</button>
+                                <div class="guestbook-postingbtn">
+                                    <button type="button" class="btn btn-outline-primary guestbook-postingbutton"
+                                        id="guestbook-postingbutton">작성</button>
+                                </div>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="guestbook-list" id="guestbook-list">
+                        <!-- 추가되는 곳 -->
                     </div>
 
                 </div>
-                <div class="guestbook-list" id="guestbook-list">
-                    <!-- 추가되는 곳 -->
-                </div>
-
             </div>
-        </div>
-    </section>
+        </section>
     </div>
 </body>
 
