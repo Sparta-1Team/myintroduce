@@ -241,7 +241,7 @@
         const db = getFirestore(app);
 
 
-        const docRead = doc(db, 'modifyintro', "아자은");
+        const docRead = doc(db, 'modifyintro', '아자은');
         const docSnap = await getDoc(docRead);
 
         let mlow = docSnap.data();
@@ -255,7 +255,6 @@
         let MIntro = mlow['MIntro'];
         let MInsta = mlow['MInsta'];
 
-        console.log(MInsta);
 
 
         let modify = `<img class="profile" src="${MPic}">`
