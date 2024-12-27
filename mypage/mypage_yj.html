@@ -239,7 +239,7 @@
         const db = getFirestore(app);
 
 
-        const docRead = doc(db, 'modifyintro', user);
+        const docRead = doc(db, 'modifyintro', "송윤정");
         const docSnap = await getDoc(docRead);
 
         let mlow = docSnap.data();
@@ -499,7 +499,7 @@
         <br>
 
 
-        <div style="align: right;" class="modify">
+        <div align="right" class="modify">
             <button type="button" id="postingbtn" onclick="window.location.href='MemberIntro_yj.html'"
                 class="btn btn-outline-info"> 수정 </button>
         </div>
@@ -535,7 +535,7 @@
                                 </div>
                             </div>
                         </div>
-    
+                        
                     </div>
                     <div class="guestbook-list" id="guestbook-list">
                         <!-- 추가되는 곳 -->
