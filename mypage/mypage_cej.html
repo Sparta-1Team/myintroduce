@@ -241,37 +241,41 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        try {
+            const docRead = doc(db, 'modifyintro', '조은종');
+            const docSnap = await getDoc(docRead);
 
-        const docRead = doc(db, 'modifyintro', '조은종');
-        const docSnap = await getDoc(docRead);
+            let mlow = docSnap.data();
 
-        let mlow = docSnap.data();
+            console.log(mlow);
 
-        console.log(mlow);
+            let MPic = mlow['MPic'];
+            let MName = mlow['MName'];
+            let MMbti = mlow['MMbti'];
+            let Mhobby = mlow['Mhobby'];
+            let MIntro = mlow['MIntro'];
+            let MInsta = mlow['MInsta'];
 
-        let MPic = mlow['MPic'];
-        let MName = mlow['MName'];
-        let MMbti = mlow['MMbti'];
-        let Mhobby = mlow['Mhobby'];
-        let MIntro = mlow['MIntro'];
-        let MInsta = mlow['MInsta'];
-
-        console.log(MInsta);
-
-
-        let modify = `<img class="profile" src="${MPic}">`
-
-        let mlink = `<a href="${MInsta}"><img class="sns-img"
-                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/github.png?raw=true"></a>`
+            console.log(MInsta);
 
 
-        $('#total').empty();
-        $('#total').append(modify);
-        $('#selfintro2').empty();
-        $('#selfintro2').append(MIntro);
-        $('#link').empty();
-        $('#link').append(mlink);
+            let modify = `<img class="profile" src="${MPic}">`
 
+            let mlink = `<a href="${MInsta}"><img class="sns-img"
+                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/velog.png?raw=true"></a>`
+
+
+            $('#total').empty();
+            $('#total').append(modify);
+            $('#selfintro2').empty();
+            $('#selfintro2').append(MIntro);
+            $('#link').empty();
+            $('#link').append(mlink);
+        } catch (error) {
+            console.error("데이터 불러오기 실패!", error);
+        }finally{
+            console.log("수정 데이터가 없습니다.");
+        }
 
         $("#guestbook-postingbutton").click(async function () {
 
@@ -491,7 +495,7 @@
 
 
         <div align="right" class="modify">
-            <button type="button" id="postingbtn" onclick="window.location.href='MemberIntro_cej.html'"
+            <button type="button" id="postingbtn" onclick="window.location.href='../modifypage/MemberIntro_cej.html'"
                 class="btn btn-outline-info"> 수정 </button>
         </div>
 

@@ -241,35 +241,41 @@
         const db = getFirestore(app);
 
 
-        const docRead = doc(db, 'modifyintro', '아자은');
-        const docSnap = await getDoc(docRead);
+        try {
+            const docRead = doc(db, 'modifyintro', '이지은');
+            const docSnap = await getDoc(docRead);
 
-        let mlow = docSnap.data();
+            let mlow = docSnap.data();
 
-        console.log(mlow);
+            console.log(mlow);
 
-        let MPic = mlow['MPic'];
-        let MName = mlow['MName'];
-        let MMbti = mlow['MMbti'];
-        let Mhobby = mlow['Mhobby'];
-        let MIntro = mlow['MIntro'];
-        let MInsta = mlow['MInsta'];
+            let MPic = mlow['MPic'];
+            let MName = mlow['MName'];
+            let MMbti = mlow['MMbti'];
+            let Mhobby = mlow['Mhobby'];
+            let MIntro = mlow['MIntro'];
+            let MInsta = mlow['MInsta'];
 
-
-
-        let modify = `<img class="profile" src="${MPic}">`
-
-        let mlink = `<a href="${MInsta}"><img class="sns-img"
-                src="https://github.com/Sparta-1Team/myintroduce/blob/main/github.png?raw=true"></a>`
+            console.log(MInsta);
 
 
-        $('#total').empty();
-        $('#total').append(modify);
-        $('#selfintro2').empty();
-        $('#selfintro2').append(MIntro);
-        $('#link').empty();
-        $('#link').append(mlink);
+            let modify = `<img class="profile" src="${MPic}">`
 
+            let mlink = `<a href="${MInsta}"><img class="sns-img"
+                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/velog.png?raw=true"></a>`
+
+
+            $('#total').empty();
+            $('#total').append(modify);
+            $('#selfintro2').empty();
+            $('#selfintro2').append(MIntro);
+            $('#link').empty();
+            $('#link').append(mlink);
+        } catch (error) {
+            console.error("데이터 불러오기 실패!", error);
+        }finally{
+            console.log("수정 데이터가 없습니다.");
+        }
 
         $("#guestbook-postingbutton").click(async function () {
 
@@ -423,7 +429,7 @@
 <body>
     <div class="mainbox">
         <div id="total">
-            <img class="profile" src="ijieun.jpeg">
+            <img class="profile" src="../ijieun.jpeg">
         </div>
         <h1 id="name">이지은</h1>
         <p class="title">백엔드 개발 지망생</p>
@@ -504,11 +510,10 @@
         <section>
             <h2>내 연락처</h2>
             <div class="sns">
-
                 <p class="text">you can meet me !</p>
                 <div id="snscontainer">
-                <a href="https://github.com/queenriwon"><img class="sns-img" src="github.png"></a>
-                <div id="link"><a href="https://queenriwon3.tistory.com/"><img class="sns-img" src="tistory.png"></a>
+                <a href="https://github.com/queenriwon"><img class="sns-img" src="../github.png"></a>
+                <div id="link"><a href="https://queenriwon3.tistory.com/"><img class="sns-img" src="../tistory.png"></a>
                 </div>
             </div>
     </div>
@@ -517,7 +522,7 @@
 
 
     <div align="right" class="modify">
-        <button type="button" id="postingbtn" onclick="window.location.href='MemberIntro_ijieun.html'"
+        <button type="button" id="postingbtn" onclick="window.location.href='../modifypage/MemberIntro_ijieun.html'"
             class="btn btn-outline-info"> 수정 </button>
     </div>
 

@@ -240,36 +240,42 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const docRead = doc(db, 'modifyintro', '문성준');
-        const docSnap = await getDoc(docRead);
+  
+        try {
+            const docRead = doc(db, 'modifyintro', '문성준');
+            const docSnap = await getDoc(docRead);
 
-        let mlow = docSnap.data();
+            let mlow = docSnap.data();
 
-        console.log(mlow);
+            console.log(mlow);
+
+            let MPic = mlow['MPic'];
+            let MName = mlow['MName'];
+            let MMbti = mlow['MMbti'];
+            let Mhobby = mlow['Mhobby'];
+            let MIntro = mlow['MIntro'];
+            let MInsta = mlow['MInsta'];
+
+            console.log(MInsta);
 
 
+            let modify = `<img class="profile" src="${MPic}">`
 
-        let MPic = mlow['MPic'];
-        let MName = mlow['MName'];
-        let MMbti = mlow['MMbti'];
-        let Mhobby = mlow['Mhobby'];
-        let MIntro = mlow['MIntro'];
-        let MInsta = mlow['MInsta'];
+            let mlink = `<a href="${MInsta}"><img class="sns-img"
+                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/velog.png?raw=true"></a>`
 
 
-
-        let modify = `<img class="profile" src="${MPic}">`
-
-        let mlink = `<a href="${MInsta}"><img class="sns-img"
-                    src="https://github.com/Sparta-1Team/myintroduce/blob/main/github.png?raw=true"></a>`
-
-        $('#total').empty();
-        $('#total').append(modify);
-        $('#selfintro2').empty();
-        $('#selfintro2').append(MIntro);
-        $('#link').empty();
-        $('#link').append(mlink);
-
+            $('#total').empty();
+            $('#total').append(modify);
+            $('#selfintro2').empty();
+            $('#selfintro2').append(MIntro);
+            $('#link').empty();
+            $('#link').append(mlink);
+        } catch (error) {
+            console.error("데이터 불러오기 실패!", error);
+        }finally{
+            console.log("수정 데이터가 없습니다.");
+        }
 
 
         $("#guestbook-postingbutton").click(async function () {
@@ -425,7 +431,7 @@
 <body>
     <div class="mainbox">
         <div id="total">
-            <img class="profile" src="munm.png">
+            <img class="profile" src="../munm.png">
         </div>
         <h1 id="name">문성준</h1>
         <p class="title">백엔드 취준생</p>
@@ -456,7 +462,7 @@
                 </div>
                 <br>
                 <div class="col-md-4">
-                    <img src="spring.png" class="img-fluid rounded-start" alt="...">
+                    <img src="../spring.png" class="img-fluid rounded-start" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -466,7 +472,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img src="cplusplus.png" class="img-fluid rounded-start" alt="...">
+                    <img src="../cplusplus.png" class="img-fluid rounded-start" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -485,11 +491,11 @@
                 
                 <p class="text">you can meet me !</p>
                 <div id="snscontainer">
-                    <a href="https://github.com/sjMun09"><img class="sns-img" src="github.png"></a>
-                    <div id="link"><a href="https://sjmun09.tistory.com/"><img class="sns-img" src="tistory.png"></a>
+                    <a href="https://github.com/sjMun09"><img class="sns-img" src="../github.png"></a>
+                    <div id="link"><a href="https://sjmun09.tistory.com/"><img class="sns-img" src="../tistory.png"></a>
                     </div>
-                    <a href="https://www.instagram.com/green.haneul/"><img class="sns-img" src="instagram.png"></a>
-                    <a href="https://velog.io/@ohoh7391/posts"><img class="sns-img" src="velog.png"></a>
+                    <a href="https://www.instagram.com/green.haneul/"><img class="sns-img" src="../instagram.png"></a>
+                    <a href="https://velog.io/@ohoh7391/posts"><img class="sns-img" src="../velog.png"></a>
                 </div>
             </div>
         </section>
@@ -497,7 +503,7 @@
 
 
         <div align="right" class="modify">
-            <button type="button" id="postingbtn" onclick="window.location.href='MemberIntro_moon.html'"
+            <button type="button" id="postingbtn" onclick="window.location.href='../modifypage/MemberIntro_moon.html'"
                 class="btn btn-outline-info"> 수정 </button>
         </div>
 
